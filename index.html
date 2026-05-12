@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>شرح SQL كامل من المحاضرات - YOUSSEF SOBHY</title>
+    <title>شرح SQL كامل - YOUSSEF SOBHY | جامعة سفنكس</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
@@ -123,13 +123,13 @@
         /* ===== HEADER ===== */
         .hero-header {
             background: linear-gradient(135deg, #0d2b3e, #161b22);
-            padding: 2.5rem 2rem;
+            padding: 2rem 2rem;
             text-align: center;
             border-bottom: 3px solid #e94560;
         }
         .profile-img {
-            width: 130px;
-            height: 130px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             background: linear-gradient(135deg, #e94560, #00ff9d);
             margin: 0 auto 1rem;
@@ -140,13 +140,14 @@
             border: 4px solid #ffd700;
         }
         .profile-img img { width: 100%; height: 100%; object-fit: cover; }
-        .profile-info h1 { font-size: 2.2rem; color: #ffd700; }
+        .profile-info h1 { font-size: 2rem; color: #ffd700; margin-bottom: 0.3rem; }
+        .profile-title { color: #00ff9d; font-size: 0.9rem; }
         /* ===== LANGUAGE BUTTONS ===== */
         .lang-buttons {
             display: flex;
             justify-content: center;
             gap: 1rem;
-            margin: 1rem 0;
+            margin-top: 1.2rem;
         }
         .lang-btn {
             background: #21262d;
@@ -169,15 +170,15 @@
         }
         .card-title {
             color: #00ff9d;
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
             display: flex;
             gap: 1rem;
             align-items: center;
             flex-wrap: wrap;
         }
-        .page-ref { background: #e94560; font-size: 0.75rem; padding: 0.2rem 0.8rem; border-radius: 20px; }
-        .badge { background: #e94560; padding: 0.2rem 0.7rem; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-left: 0.3rem; }
+        .page-ref { background: #e94560; font-size: 0.7rem; padding: 0.2rem 0.8rem; border-radius: 20px; }
+        .badge { background: #e94560; padding: 0.2rem 0.7rem; border-radius: 20px; font-size: 0.75rem; display: inline-block; margin-left: 0.5rem; }
         .code-wrap {
             margin: 1.2rem 0;
             border-radius: 12px;
@@ -230,6 +231,7 @@
         @media (max-width: 700px) {
             .container { padding: 1rem; }
             .chat-window { width: 290px; left: 10px; }
+            .card-title { font-size: 1.2rem; }
         }
         .arabic-section, .english-section { display: block; width: 100%; }
         body.english-mode .arabic-section { display: none; }
@@ -259,14 +261,17 @@
 
 <div class="chat-window" id="chatWin">
     <div class="chat-header"><span><i class="fas fa-robot"></i> الذكاء الاصطناعي - Youssef Sobhy</span><button class="close-chat" id="closeChat" style="background:none;border:none;color:white;font-size:1.2rem;">✖</button></div>
-    <div class="chat-messages" id="msgs"><div class="message bot">مرحباً! أنا الذكاء الاصطناعي الخاص بـ Youssef Sobhy. اسألني أي شيء عن SQL أو عن المطور.</div></div>
+    <div class="chat-messages" id="msgs"><div class="message bot">مرحباً! أنا <strong>يوسف صبحى</strong>، طالب بجامعة سفنكس كلية حاسبات وذكاء اصطناعي. اسألني أي شيء عن SQL أو عني أنا.</div></div>
     <div class="chat-input-area"><input class="chat-input" id="chatInp" placeholder="اكتب سؤالك..."><button class="send-btn" id="sendMsg"><i class="fas fa-paper-plane"></i></button></div>
 </div>
 
 <div class="main-content">
     <div class="hero-header">
-        <div class="profile-img"><img src="profile.jpg" onerror="this.src='https://via.placeholder.com/130?text=Y+S'" alt="Youssef"></div>
-        <div class="profile-info"><h1>YOUSSEF SOBHY</h1><div style="color:#00ff9d;">تم التطوير بواسطة Youssef Sobhy</div></div>
+        <div class="profile-img"><img src="profile.jpg" onerror="this.src='https://via.placeholder.com/120?text=Y+S'" alt="Youssef"></div>
+        <div class="profile-info">
+            <h1>YOUSSEF SOBHY</h1>
+            <div class="profile-title">Student at Sphinx University - Faculty of Computer Science and Artificial Intelligence</div>
+        </div>
         <div class="lang-buttons">
             <button class="lang-btn active" id="btnAr">🇸🇦 العربية (شرح كامل)</button>
             <button class="lang-btn" id="BtnEn">🇬🇧 English (Full Explanation)</button>
@@ -274,54 +279,66 @@
     </div>
 
     <div class="container">
-        <!-- القسم العربي -->
+        <!-- ========== القسم العربي ========== -->
         <div class="arabic-section" id="arabicDiv">
             <!-- مقدمة -->
-            <div id="intro" class="card"><div class="card-title">📖 ما هي SQL؟ <span class="page-ref">lec5 - صفحة 3</span></div>
-            <p><span class="badge">تعريف SQL</span> SQL إختصار لـ <strong>Structured Query Language</strong>، وهي لغة تستخدم للتعامل مع قواعد البيانات. هي اللغة الأهم والأكثر انتشاراً.</p>
-            <p><span class="badge">معنى الاستعلام (Query)</span> هو إنشاء جدول جديد يحتوي على نتائج معينة بناءً على شروط نحددها من الجداول الأصلية في قاعدة البيانات.</p>
-            <p><span class="badge">الفرق</span> بين الجداول الرئيسية (اللي بننشئها) والجداول المشتقة (اللي بتظهر نتيجة استعلام).</p>
-            <div class="card-title" style="font-size:1.3rem;">📌 أقسام SQL <span class="page-ref">lec5 - صفحة 4</span></div>
-            <ul><li><strong>DDL</strong> (لغة تعريف البيانات) : تستخدم لإنشاء وتعديل وحذف الجداول والهياكل.</li>
-            <li><strong>DML</strong> (لغة معالجة البيانات) : تستخدم لإدراج وحذف وتعديل واستعلام البيانات داخل الجداول.</li>
-            <li><strong>DCL</strong> (لغة التحكم) : تستخدم لحماية قاعدة البيانات وتحديد صلاحيات المستخدمين.</li></ul>
-            <div class="code-wrap"><div class="code-header"><span>🔹 مثال CREATE SCHEMA</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE SCHEMA</span> COMPANY AUTHORIZATION <span class="sql-string">'Jsmith'</span>;</pre></div></div>
-            <p>✅ <strong>شرح بسيط:</strong> الأمر ده بيعلن عن وجود قاعدة بيانات جديدة اسمها COMPANY والشخص المسؤول عنها هو Jsmith.</p></div>
+            <div id="intro" class="card">
+                <div class="card-title">📖 ما هي SQL؟ <span class="page-ref">lec5 - صفحة 3</span></div>
+                <p><span class="badge">تعريف SQL</span> SQL إختصار لـ <strong>Structured Query Language</strong>، وهي لغة تستخدم للتعامل مع قواعد البيانات. هي اللغة الأهم والأكثر انتشاراً في قواعد البيانات الحالية.</p>
+                <p><span class="badge">معنى الاستعلام (Query)</span> هو إنشاء جدول جديد يحتوي على نتائج معينة بناءً على شروط نحددها من الجداول الأصلية في قاعدة البيانات. الفرق بين الجداول الرئيسية (اللي بننشئها) والجداول المشتقة (اللي بتظهر نتيجة استعلام).</p>
+                <div class="card-title" style="font-size:1.3rem;">📌 أقسام SQL <span class="page-ref">lec5 - صفحة 4</span></div>
+                <ul>
+                    <li><strong>DDL</strong> (لغة تعريف البيانات) : تستخدم لإنشاء وتعديل وحذف الجداول والهياكل.</li>
+                    <li><strong>DML</strong> (لغة معالجة البيانات) : تستخدم لإدراج وحذف وتعديل واستعلام البيانات داخل الجداول.</li>
+                    <li><strong>DCL</strong> (لغة التحكم) : تستخدم لحماية قاعدة البيانات وتحديد صلاحيات المستخدمين.</li>
+                </ul>
+                <div class="code-wrap"><div class="code-header"><span>🔹 مثال CREATE SCHEMA</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE SCHEMA</span> COMPANY AUTHORIZATION <span class="sql-string">'Jsmith'</span>;</pre></div></div>
+                <p>✅ <strong>شرح بسيط:</strong> الأمر ده بيعلن عن وجود قاعدة بيانات جديدة اسمها COMPANY والشخص المسؤول عنها هو Jsmith.</p>
+            </div>
 
             <!-- أنواع البيانات -->
-            <div id="datatypes" class="card"><div class="card-title">📊 أنواع البيانات <span class="page-ref">lec5 - صفحة 12-13</span></div>
-            <p><span class="badge">المهم</span> كل عمود في الجدول لازم نحدد له "نوع بيانات" عشان يعرف يتعامل معه.</p>
-            <table><tr><th>النوع</th><th>شرحه بالعامية</th><th>مثال</th></tr>
-            <tr><td>INTEGER / INT</td><td>أرقام صحيحة (من غير كسور)</td><td><code>Age INT</code></td></tr>
-            <tr><td>SMALLINT</td><td>أرقام صغيرة</td><td><code>small_num SMALLINT</code></td></tr>
-            <tr><td>FLOAT / REAL</td><td>أرقام عشرية (بكسور)</td><td><code>price FLOAT</code></td></tr>
-            <tr><td>DECIMAL(i,j)</td><td>رقم عشري نحدد طوله (i اجمالي الأرقام, j الأرقام بعد العلامة)</td><td><code>Salary DECIMAL(10,2)</code></td></tr>
-            <tr><td>CHAR(n)</td><td>نص بطول ثابت (لو كتبت أقل يكمل فراغات)</td><td><code>Gender CHAR(1)</code></td></tr>
-            <tr><td>VARCHAR(n)</td><td>نص بطول متغير (ياخد المساحة الفعلية فقط)</td><td><code>Name VARCHAR(50)</code></td></tr>
-            <tr><td>DATE</td><td>تاريخ بالصيغة YYYY-MM-DD</td><td><code>Bdate DATE</code></td></tr>
-            <tr><td>TIME</td><td>وقت HH:MM:SS</td><td><code>Start_time TIME</code></td></tr>
-            <tr><td>TIMESTAMP</td><td>تاريخ ووقت مع أجزاء من الثانية</td><td><code>created_at TIMESTAMP</code></td></tr></table>
-            <div class="code-wrap"><div class="code-header"><span>مثال TIMESTAMP</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">TIMESTAMP</span> <span class="sql-string">'2008-09-27 09:12:47.648302'</span></pre></div></div></div>
+            <div id="datatypes" class="card">
+                <div class="card-title">📊 أنواع البيانات <span class="page-ref">lec5 - صفحة 12-13</span></div>
+                <p><span class="badge">المهم</span> كل عمود في الجدول لازم نحدد له "نوع بيانات" عشان يعرف يتعامل معه.</p>
+                <table>
+                    <tr><th>النوع</th><th>شرحه بالعامية</th><th>مثال</th></tr>
+                    <tr><td>INTEGER / INT</td><td>أرقام صحيحة (من غير كسور)</td><td><code>Age INT</code></td></tr>
+                    <tr><td>SMALLINT</td><td>أرقام صغيرة</td><td><code>small_num SMALLINT</code></td></tr>
+                    <tr><td>FLOAT / REAL</td><td>أرقام عشرية (بكسور)</td><td><code>price FLOAT</code></td></tr>
+                    <tr><td>DECIMAL(i,j)</td><td>رقم عشري نحدد طوله (i اجمالي الأرقام, j الأرقام بعد العلامة)</td><td><code>Salary DECIMAL(10,2)</code></td></tr>
+                    <tr><td>CHAR(n)</td><td>نص بطول ثابت (لو كتبت أقل يكمل فراغات)</td><td><code>Gender CHAR(1)</code></td></tr>
+                    <tr><td>VARCHAR(n)</td><td>نص بطول متغير (ياخد المساحة الفعلية فقط)</td><td><code>Name VARCHAR(50)</code></td></tr>
+                    <tr><td>DATE</td><td>تاريخ بالصيغة YYYY-MM-DD</td><td><code>Bdate DATE</code></td></tr>
+                    <tr><td>TIME</td><td>وقت HH:MM:SS</td><td><code>Start_time TIME</code></td></tr>
+                    <tr><td>TIMESTAMP</td><td>تاريخ ووقت مع أجزاء من الثانية</td><td><code>created_at TIMESTAMP</code></td></tr>
+                </table>
+                <div class="code-wrap"><div class="code-header"><span>مثال TIMESTAMP</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">TIMESTAMP</span> <span class="sql-string">'2008-09-27 09:12:47.648302'</span></pre></div></div>
+            </div>
 
             <!-- القيود -->
-            <div id="constraints" class="card"><div class="card-title">🔒 القيود (Constraints) <span class="page-ref">lec5 - صفحة 14-17</span></div>
-            <p><span class="badge">القيود</span> هي قوانين تمنع إدخال بيانات غلط.</p>
-            <ul><li><strong>NOT NULL</strong> : العمود ممنوع يكون فاضي.</li>
-            <li><strong>DEFAULT</strong> : قيمة إفتراضية لو المستخدم مدخلش حاجة.</li>
-            <li><strong>CHECK</strong> : شرط معين لازم البيانات تطبقه.</li>
-            <li><strong>PRIMARY KEY</strong> : المفتاح الأساسي -> بيحدد كل سجل بشكل فريد وممنوع يكون NULL أو مكرر.</li>
-            <li><strong>UNIQUE</strong> : يمنع تكرار القيم لكن يسمح NULL.</li>
-            <li><strong>FOREIGN KEY</strong> : المفتاح الأجنبي -> بيربط جدول بجدول تاني.</li></ul>
-            <div class="code-wrap"><div class="code-header"><span>أمثلة عملية</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre>Dno <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-number">1</span>;
+            <div id="constraints" class="card">
+                <div class="card-title">🔒 القيود (Constraints) <span class="page-ref">lec5 - صفحة 14-17</span></div>
+                <p><span class="badge">القيود</span> هي قوانين تمنع إدخال بيانات غلط.</p>
+                <ul>
+                    <li><strong>NOT NULL</strong> : العمود ممنوع يكون فاضي.</li>
+                    <li><strong>DEFAULT</strong> : قيمة إفتراضية لو المستخدم مدخلش حاجة.</li>
+                    <li><strong>CHECK</strong> : شرط معين لازم البيانات تطبقه.</li>
+                    <li><strong>PRIMARY KEY</strong> : المفتاح الأساسي -> بيحدد كل سجل بشكل فريد وممنوع يكون NULL أو مكرر.</li>
+                    <li><strong>UNIQUE</strong> : يمنع تكرار القيم لكن يسمح NULL.</li>
+                    <li><strong>FOREIGN KEY</strong> : المفتاح الأجنبي -> بيربط جدول بجدول تاني.</li>
+                </ul>
+                <div class="code-wrap"><div class="code-header"><span>أمثلة عملية</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre>Dno <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-number">1</span>;
 Dnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">CHECK</span> (Dnumber > <span class="sql-number">0</span> <span class="sql-keyword">AND</span> Dnumber &lt; <span class="sql-number">21</span>);
 <span class="sql-keyword">PRIMARY KEY</span> (Ssn);
 <span class="sql-keyword">FOREIGN KEY</span> (Dno) <span class="sql-keyword">REFERENCES</span> DEPARTMENT(Dnumber);
-<span class="sql-keyword">CREATE DOMAIN</span> D_NUM <span class="sql-keyword">AS INTEGER CHECK</span> (D_NUM > <span class="sql-number">0</span>);</pre></div></div></div>
+<span class="sql-keyword">CREATE DOMAIN</span> D_NUM <span class="sql-keyword">AS INTEGER CHECK</span> (D_NUM > <span class="sql-number">0</span>);</pre></div></div>
+            </div>
 
             <!-- CREATE TABLE -->
-            <div id="ddl" class="card"><div class="card-title">🛠️ CREATE TABLE <span class="page-ref">lec5 - صفحة 7-11</span></div>
-            <p><span class="badge">أمر CREATE TABLE</span> بنستخدمه لإنشاء جدول جديد. بنحدد أسماء الأعمدة وأنواع البيانات والقيود.</p>
-            <div class="code-wrap"><div class="code-header"><span>جدول EMPLOYEE</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> EMPLOYEE (
+            <div id="ddl" class="card">
+                <div class="card-title">🛠️ CREATE TABLE <span class="page-ref">lec5 - صفحة 7-11</span></div>
+                <p><span class="badge">أمر CREATE TABLE</span> بنستخدمه لإنشاء جدول جديد. بنحدد أسماء الأعمدة وأنواع البيانات والقيود.</p>
+                <div class="code-wrap"><div class="code-header"><span>جدول EMPLOYEE</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> EMPLOYEE (
     Fname <span class="sql-keyword">VARCHAR</span>(15) <span class="sql-keyword">NOT NULL</span>,
     Minit <span class="sql-keyword">CHAR</span>,
     Lname <span class="sql-keyword">VARCHAR</span>(15) <span class="sql-keyword">NOT NULL</span>,
@@ -336,7 +353,7 @@ Dnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">CHECK</sp
     <span class="sql-keyword">FOREIGN KEY</span> (Super_ssn) <span class="sql-keyword">REFERENCES</span> EMPLOYEE(Ssn),
     <span class="sql-keyword">FOREIGN KEY</span> (Dno) <span class="sql-keyword">REFERENCES</span> DEPARTMENT(Dnumber)
 );</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>جدول DEPARTMENT</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> DEPARTMENT (
+                <div class="code-wrap"><div class="code-header"><span>جدول DEPARTMENT</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> DEPARTMENT (
     Dname <span class="sql-keyword">VARCHAR</span>(15) <span class="sql-keyword">NOT NULL</span>,
     Dnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span>,
     Mgr_ssn <span class="sql-keyword">CHAR</span>(9) <span class="sql-keyword">NOT NULL</span>,
@@ -345,13 +362,13 @@ Dnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">CHECK</sp
     <span class="sql-keyword">UNIQUE</span> (Dname),
     <span class="sql-keyword">FOREIGN KEY</span> (Mgr_ssn) <span class="sql-keyword">REFERENCES</span> EMPLOYEE(Ssn)
 );</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>جدول DEPT_LOCATIONS</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> DEPT_LOCATIONS (
+                <div class="code-wrap"><div class="code-header"><span>جدول DEPT_LOCATIONS</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> DEPT_LOCATIONS (
     Dnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span>,
     Dlocation <span class="sql-keyword">VARCHAR</span>(15) <span class="sql-keyword">NOT NULL</span>,
     <span class="sql-keyword">PRIMARY KEY</span> (Dnumber, Dlocation),
     <span class="sql-keyword">FOREIGN KEY</span> (Dnumber) <span class="sql-keyword">REFERENCES</span> DEPARTMENT(Dnumber)
 );</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>جدول PROJECT</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> PROJECT (
+                <div class="code-wrap"><div class="code-header"><span>جدول PROJECT</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> PROJECT (
     Pname <span class="sql-keyword">VARCHAR</span>(15) <span class="sql-keyword">NOT NULL</span>,
     Pnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span>,
     Plocation <span class="sql-keyword">VARCHAR</span>(15),
@@ -360,7 +377,7 @@ Dnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">CHECK</sp
     <span class="sql-keyword">UNIQUE</span> (Pname),
     <span class="sql-keyword">FOREIGN KEY</span> (Dnum) <span class="sql-keyword">REFERENCES</span> DEPARTMENT(Dnumber)
 );</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>جدول WORKS_ON</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> WORKS_ON (
+                <div class="code-wrap"><div class="code-header"><span>جدول WORKS_ON</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> WORKS_ON (
     Essn <span class="sql-keyword">CHAR</span>(9) <span class="sql-keyword">NOT NULL</span>,
     Pno <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span>,
     Hours <span class="sql-keyword">DECIMAL</span>(3,1) <span class="sql-keyword">NOT NULL</span>,
@@ -368,7 +385,7 @@ Dnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">CHECK</sp
     <span class="sql-keyword">FOREIGN KEY</span> (Essn) <span class="sql-keyword">REFERENCES</span> EMPLOYEE(Ssn),
     <span class="sql-keyword">FOREIGN KEY</span> (Pno) <span class="sql-keyword">REFERENCES</span> PROJECT(Pnumber)
 );</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>جدول DEPENDENT</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> DEPENDENT (
+                <div class="code-wrap"><div class="code-header"><span>جدول DEPENDENT</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> DEPENDENT (
     Essn <span class="sql-keyword">CHAR</span>(9) <span class="sql-keyword">NOT NULL</span>,
     Dependent_name <span class="sql-keyword">VARCHAR</span>(15) <span class="sql-keyword">NOT NULL</span>,
     Sex <span class="sql-keyword">CHAR</span>,
@@ -376,43 +393,49 @@ Dnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">CHECK</sp
     Relationship <span class="sql-keyword">VARCHAR</span>(8),
     <span class="sql-keyword">PRIMARY KEY</span> (Essn, Dependent_name),
     <span class="sql-keyword">FOREIGN KEY</span> (Essn) <span class="sql-keyword">REFERENCES</span> EMPLOYEE(Ssn)
-);</pre></div></div></div>
+);</pre></div></div>
+            </div>
 
-            <!-- DML (INSERT, UPDATE, DELETE) -->
-            <div id="dml" class="card"><div class="card-title">✏️ DML (إدراج - تعديل - حذف) <span class="page-ref">lec5 - صفحة 18-20</span></div>
-            <p><strong>🔹 INSERT INTO</strong> : إضافة بيانات جديدة.</p>
-            <div class="code-wrap"><div class="code-header"><span>مثال إدراج</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">INSERT INTO</span> EMPLOYEE (Fname, Lname, Dno, Ssn) 
+            <!-- DML -->
+            <div id="dml" class="card">
+                <div class="card-title">✏️ DML (إدراج - تعديل - حذف) <span class="page-ref">lec5 - صفحة 18-20</span></div>
+                <p><strong>🔹 INSERT INTO</strong> : إضافة بيانات جديدة.</p>
+                <div class="code-wrap"><div class="code-header"><span>مثال إدراج</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">INSERT INTO</span> EMPLOYEE (Fname, Lname, Dno, Ssn) 
 <span class="sql-keyword">VALUES</span> (<span class="sql-string">'Richard'</span>, <span class="sql-string">'Marini'</span>, <span class="sql-number">4</span>, <span class="sql-string">'653298653'</span>);
 
 <span class="sql-keyword">INSERT INTO</span> tab1 <span class="sql-keyword">VALUES</span> (<span class="sql-number">111</span>, <span class="sql-string">'aaaaa'</span>, <span class="sql-number">55443321</span>);</pre></div></div>
-            <p><strong>🔹 UPDATE</strong> : تعديل بيانات موجودة.</p>
-            <div class="code-wrap"><div class="code-header"><span>مثال تعديل</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">UPDATE</span> PROJECT <span class="sql-keyword">SET</span> Location = <span class="sql-string">'Bellaire'</span>, Dnum = <span class="sql-number">5</span> <span class="sql-keyword">WHERE</span> Pnumber=<span class="sql-number">10</span>;
+                <p><strong>🔹 UPDATE</strong> : تعديل بيانات موجودة.</p>
+                <div class="code-wrap"><div class="code-header"><span>مثال تعديل</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">UPDATE</span> PROJECT <span class="sql-keyword">SET</span> Location = <span class="sql-string">'Bellaire'</span>, Dnum = <span class="sql-number">5</span> <span class="sql-keyword">WHERE</span> Pnumber=<span class="sql-number">10</span>;
 <span class="sql-keyword">UPDATE</span> tab1 <span class="sql-keyword">SET</span> sname=<span class="sql-string">'kkkkk'</span> <span class="sql-keyword">WHERE</span> id=<span class="sql-number">222</span>;</pre></div></div>
-            <p><strong>🔹 DELETE</strong> : حذف بيانات.</p>
-            <div class="code-wrap"><div class="code-header"><span>أمثلة حذف</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">DELETE FROM</span> EMPLOYEE <span class="sql-keyword">WHERE</span> Lname=<span class="sql-string">'Brown'</span>;
-<span class="sql-keyword">DELETE FROM</span> EMPLOYEE;  <span class="sql-comment">-- يحذف كل الصفوف</span></pre></div></div></div>
+                <p><strong>🔹 DELETE</strong> : حذف بيانات.</p>
+                <div class="code-wrap"><div class="code-header"><span>أمثلة حذف</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">DELETE FROM</span> EMPLOYEE <span class="sql-keyword">WHERE</span> Lname=<span class="sql-string">'Brown'</span>;
+<span class="sql-keyword">DELETE FROM</span> EMPLOYEE;  <span class="sql-comment">-- يحذف كل الصفوف</span></pre></div></div>
+            </div>
 
             <!-- SELECT -->
-            <div id="select" class="card"><div class="card-title">🔍 SELECT (الاستعلام) <span class="page-ref">lec5 - صفحة 21-31</span></div>
-            <p><span class="badge">SELECT</span> هو الأمر المستخدم لاستخراج البيانات من قاعدة البيانات.</p>
-            <div class="code-wrap"><div class="code-header"><span>أمثلة أساسية</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> Bdate, Address <span class="sql-keyword">FROM</span> EMPLOYEE <span class="sql-keyword">WHERE</span> Fname=<span class="sql-string">'John'</span>;
+            <div id="select" class="card">
+                <div class="card-title">🔍 SELECT (الاستعلام) <span class="page-ref">lec5 - صفحة 21-31</span></div>
+                <p><span class="badge">SELECT</span> هو الأمر المستخدم لاستخراج البيانات من قاعدة البيانات.</p>
+                <div class="code-wrap"><div class="code-header"><span>أمثلة أساسية</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> Bdate, Address <span class="sql-keyword">FROM</span> EMPLOYEE <span class="sql-keyword">WHERE</span> Fname=<span class="sql-string">'John'</span>;
 <span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> EMPLOYEE;   <span class="sql-comment">-- * تعني كل الأعمدة</span>
 <span class="sql-keyword">SELECT</span> Ssn <span class="sql-keyword">FROM</span> EMPLOYEE;</pre></div></div>
-            <p><strong>🔸 LIKE (البحث بنمط)</strong> : يستخدم مع علامة % (أي عدد من الحروف) و _ (حرف واحد).</p>
-            <div class="code-wrap"><div class="code-header"><span>مثال LIKE</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> FNAME, LNAME <span class="sql-keyword">FROM</span> EMPLOYEE <span class="sql-keyword">WHERE</span> Address <span class="sql-keyword">LIKE</span> <span class="sql-string">'%Houston,TX%'</span>;</pre></div></div>
-            <p><strong>🔸 BETWEEN (بين قيمتين)</strong></p>
-            <div class="code-wrap"><div class="code-header"><span>مثال BETWEEN</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> EMPLOYEE <span class="sql-keyword">WHERE</span> (Salary <span class="sql-keyword">BETWEEN</span> <span class="sql-number">30000</span> <span class="sql-keyword">AND</span> <span class="sql-number">40000</span>) <span class="sql-keyword">AND</span> Dno = <span class="sql-number">5</span>;</pre></div></div>
-            <p><strong>🔸 ORDER BY (ترتيب النتائج)</strong></p>
-            <div class="code-wrap"><div class="code-header"><span>مثال ORDER BY</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> D.Name, E.Name <span class="sql-keyword">FROM</span> DEPARTMENT D, EMPLOYEE E <span class="sql-keyword">ORDER BY</span> D.Name, E.Name;</pre></div></div>
-            <p><strong>🔸 UNION (دمج نتيجتين)</strong></p>
-            <div class="code-wrap"><div class="code-header"><span>مثال UNION</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre>(<span class="sql-keyword">SELECT</span> Pnumber <span class="sql-keyword">FROM</span> PROJECT, DEPARTMENT, EMPLOYEE <span class="sql-keyword">WHERE</span> Lname=<span class="sql-string">'Smith'</span>)
+                <p><strong>🔸 LIKE (البحث بنمط)</strong> : يستخدم مع علامة % (أي عدد من الحروف) و _ (حرف واحد).</p>
+                <div class="code-wrap"><div class="code-header"><span>مثال LIKE</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> FNAME, LNAME <span class="sql-keyword">FROM</span> EMPLOYEE <span class="sql-keyword">WHERE</span> Address <span class="sql-keyword">LIKE</span> <span class="sql-string">'%Houston,TX%'</span>;</pre></div></div>
+                <p><strong>🔸 BETWEEN (بين قيمتين)</strong></p>
+                <div class="code-wrap"><div class="code-header"><span>مثال BETWEEN</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> EMPLOYEE <span class="sql-keyword">WHERE</span> (Salary <span class="sql-keyword">BETWEEN</span> <span class="sql-number">30000</span> <span class="sql-keyword">AND</span> <span class="sql-number">40000</span>) <span class="sql-keyword">AND</span> Dno = <span class="sql-number">5</span>;</pre></div></div>
+                <p><strong>🔸 ORDER BY (ترتيب النتائج)</strong></p>
+                <div class="code-wrap"><div class="code-header"><span>مثال ORDER BY</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> D.Name, E.Name <span class="sql-keyword">FROM</span> DEPARTMENT D, EMPLOYEE E <span class="sql-keyword">ORDER BY</span> D.Name, E.Name;</pre></div></div>
+                <p><strong>🔸 UNION (دمج نتيجتين)</strong></p>
+                <div class="code-wrap"><div class="code-header"><span>مثال UNION</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre>(<span class="sql-keyword">SELECT</span> Pnumber <span class="sql-keyword">FROM</span> PROJECT, DEPARTMENT, EMPLOYEE <span class="sql-keyword">WHERE</span> Lname=<span class="sql-string">'Smith'</span>)
 <span class="sql-keyword">UNION</span>
-(<span class="sql-keyword">SELECT</span> Pnumber <span class="sql-keyword">FROM</span> PROJECT, WORKS_ON, EMPLOYEE <span class="sql-keyword">WHERE</span> Lname=<span class="sql-string">'Smith'</span>);</pre></div></div></div>
+(<span class="sql-keyword">SELECT</span> Pnumber <span class="sql-keyword">FROM</span> PROJECT, WORKS_ON, EMPLOYEE <span class="sql-keyword">WHERE</span> Lname=<span class="sql-string">'Smith'</span>);</pre></div></div>
+            </div>
 
             <!-- CompanyDB -->
-            <div id="companydb" class="card"><div class="card-title">🏢 قاعدة بيانات CompanyDB (كل الأكواد مرة واحدة)</div>
-            <div class="code-wrap"><div class="code-header"><span>إنشاء قاعدة البيانات والجداول والبيانات</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div>
-            <div class="code-block"><pre><span class="sql-keyword">DROP DATABASE IF EXISTS</span> CompanyDB;
+            <div id="companydb" class="card">
+                <div class="card-title">🏢 قاعدة بيانات CompanyDB (كل الأكواد مرة واحدة)</div>
+                <div class="code-wrap"><div class="code-header"><span>إنشاء قاعدة البيانات والجداول والبيانات</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div>
+                <div class="code-block"><pre><span class="sql-keyword">DROP DATABASE IF EXISTS</span> CompanyDB;
 <span class="sql-keyword">CREATE DATABASE</span> CompanyDB;
 <span class="sql-keyword">USE</span> CompanyDB;
 
@@ -424,59 +447,210 @@ Dnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">CHECK</sp
 <span class="sql-keyword">INSERT INTO</span> Employee <span class="sql-keyword">VALUES</span> 
 (101,<span class="sql-string">'Ahmed'</span>,5000,1),(102,<span class="sql-string">'Mona'</span>,4500,2),(103,<span class="sql-string">'Ali'</span>,4000,1),
 (104,<span class="sql-string">'Sara'</span>,5500,3),(105,<span class="sql-string">'Omar'</span>,3800,2);
-<span class="sql-keyword">INSERT INTO</span> Works_On <span class="sql-keyword">VALUES</span> (101,10,20),(102,20,15),(103,10,10),(104,30,25),(105,20,12);</pre></div></div></div>
+<span class="sql-keyword">INSERT INTO</span> Works_On <span class="sql-keyword">VALUES</span> (101,10,20),(102,20,15),(103,10,10),(104,30,25),(105,20,12);</pre></div></div>
+            </div>
 
             <!-- حلول الأسئلة -->
-            <div id="solutions" class="card"><div class="card-title">✅ حلول جميع الأسئلة (Exam Style)</div>
-            <div class="code-wrap"><div class="code-header"><span>Q1 : الأسماء التي تبدأ بحرف A</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">WHERE</span> Fname <span class="sql-keyword">LIKE</span> <span class="sql-string">'A%'</span>;</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>Q2 : المرتب بين 3500 و 5500</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">WHERE</span> Salary <span class="sql-keyword">BETWEEN</span> 3500 <span class="sql-keyword">AND</span> 5500;</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>Q3 : اسم الموظف واسم القسم (JOIN)</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> Employee.Fname, Department.Dname 
+            <div id="solutions" class="card">
+                <div class="card-title">✅ حلول جميع الأسئلة (Exam Style)</div>
+                <div class="code-wrap"><div class="code-header"><span>Q1 : الأسماء التي تبدأ بحرف A</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">WHERE</span> Fname <span class="sql-keyword">LIKE</span> <span class="sql-string">'A%'</span>;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q2 : المرتب بين 3500 و 5500</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">WHERE</span> Salary <span class="sql-keyword">BETWEEN</span> 3500 <span class="sql-keyword">AND</span> 5500;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q3 : اسم الموظف واسم القسم (JOIN)</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> Employee.Fname, Department.Dname 
 <span class="sql-keyword">FROM</span> Employee, Department 
 <span class="sql-keyword">WHERE</span> Employee.Dno = Department.Dnumber;</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>Q4 : إضافة قسم جديد</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">INSERT INTO</span> Department <span class="sql-keyword">VALUES</span> (4, <span class="sql-string">'Finance'</span>);</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>Q5 : حذف موظف رقم 107</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">DELETE FROM</span> Employee <span class="sql-keyword">WHERE</span> SSN = 107;</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>Q6 : متوسط المرتبات</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> <span class="sql-keyword">AVG</span>(Salary) <span class="sql-keyword">AS</span> AverageSalary <span class="sql-keyword">FROM</span> Employee;</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>Q10 : عدد الموظفين</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> <span class="sql-keyword">COUNT</span>(*) <span class="sql-keyword">FROM</span> Employee;</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>Q12 : أعلى مرتب</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> <span class="sql-keyword">MAX</span>(Salary) <span class="sql-keyword">FROM</span> Employee;</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>Q13 : عدد الموظفين لكل قسم (GROUP BY)</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> Dno, <span class="sql-keyword">COUNT</span>(*) <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">GROUP BY</span> Dno;</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>Q17 : الترتيب حسب المرتب تنازلياً</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">ORDER BY</span> Salary <span class="sql-keyword">DESC</span>;</pre></div></div>
-            <div class="code-wrap"><div class="code-header"><span>Q18 : الأسماء والمرتبات مرتبة بالاسم</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> Fname, Salary <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">ORDER BY</span> Fname;</pre></div></div>
-            <p><span class="badge">ملاحظة مهمة</span> كل هذه الأكواد مأخوذة من المحاضرات الأصلية (lec5 و lec6) ولم يتم إضافة أي شيء من خارجها.</p></div>
+                <div class="code-wrap"><div class="code-header"><span>Q4 : إضافة قسم جديد</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">INSERT INTO</span> Department <span class="sql-keyword">VALUES</span> (4, <span class="sql-string">'Finance'</span>);</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q5 : حذف موظف رقم 107</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">DELETE FROM</span> Employee <span class="sql-keyword">WHERE</span> SSN = 107;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q6 : متوسط المرتبات</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> <span class="sql-keyword">AVG</span>(Salary) <span class="sql-keyword">AS</span> AverageSalary <span class="sql-keyword">FROM</span> Employee;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q10 : عدد الموظفين</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> <span class="sql-keyword">COUNT</span>(*) <span class="sql-keyword">FROM</span> Employee;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q12 : أعلى مرتب</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> <span class="sql-keyword">MAX</span>(Salary) <span class="sql-keyword">FROM</span> Employee;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q13 : عدد الموظفين لكل قسم (GROUP BY)</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> Dno, <span class="sql-keyword">COUNT</span>(*) <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">GROUP BY</span> Dno;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q17 : الترتيب حسب المرتب تنازلياً</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">ORDER BY</span> Salary <span class="sql-keyword">DESC</span>;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q18 : الأسماء والمرتبات مرتبة بالاسم</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> Fname, Salary <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">ORDER BY</span> Fname;</pre></div></div>
+                <p><span class="badge">ملاحظة مهمة</span> كل هذه الأكواد مأخوذة من المحاضرات الأصلية (lec5 و lec6) ولم يتم إضافة أي شيء من خارجها.</p>
+            </div>
         </div>
 
-        <!-- القسم الإنجليزي (مترجم كامل) -->
+        <!-- ========== القسم الإنجليزي (مترجم كامل) ========== -->
         <div class="english-section" id="englishDiv">
-            <div class="card"><div class="card-title">📖 What is SQL? <span class="page-ref">lec5 - page 3</span></div>
-            <p><span class="badge">SQL</span> is the most widely used database language. A <strong>Query</strong> is a new table created from existing tables based on specific criteria.</p>
-            <div class="card-title" style="font-size:1.3rem;">📌 SQL Parts</div>
-            <ul><li><strong>DDL</strong> : Data Definition Language (create/alter/delete tables)</li><li><strong>DML</strong> : Data Manipulation Language (insert/delete/update/select)</li><li><strong>DCL</strong> : Data Control Language (security/permissions)</li></ul>
-            <div class="code-wrap"><div class="code-header"><span>CREATE SCHEMA Example</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE SCHEMA</span> COMPANY AUTHORIZATION <span class="sql-string">'Jsmith'</span>;</pre></div></div></div>
-            <div class="card"><div class="card-title">📊 Data Types <span class="page-ref">lec5 - p12-13</span></div>
-            <table><tr><th>Type</th><th>Description</th><th>Example</th></tr>
-            <tr><td>INTEGER</td><td>Whole numbers</td><td><code>Age INT</code></td></tr>
-            <tr><td>VARCHAR(n)</td><td>Variable string</td><td><code>Name VARCHAR(50)</code></td></tr>
-            <tr><td>DATE</td><td>YYYY-MM-DD</td><td><code>Bdate DATE</code></td></tr>
-            <tr><td>DECIMAL(i,j)</td><td>Fixed-point decimal</td><td><code>Salary DECIMAL(10,2)</code></td></tr>
-            </table></div>
-            <div class="card"><div class="card-title">🔒 Constraints</div><div class="code-block"><pre><span class="sql-keyword">PRIMARY KEY</span> (Ssn);
+            <div class="card">
+                <div class="card-title">📖 What is SQL? <span class="page-ref">lec5 - page 3</span></div>
+                <p><span class="badge">SQL Definition</span> SQL stands for <strong>Structured Query Language</strong>. It is the most widely used database language in current databases.</p>
+                <p><span class="badge">The Query</span> A query is creating a new table that contains results with specific criteria from the database tables. There is a difference between main tables (original) and derived tables (query results).</p>
+                <div class="card-title" style="font-size:1.3rem;">📌 SQL Divisions <span class="page-ref">lec5 - page 4</span></div>
+                <ul>
+                    <li><strong>DDL</strong> (Data Definition Language): Used to create/alter/delete tables and their attributes.</li>
+                    <li><strong>DML</strong> (Data Manipulation Language): Used to insert/delete/modify/query data in records.</li>
+                    <li><strong>DCL</strong> (Data Control Language): Used for database protection and security.</li>
+                </ul>
+                <div class="code-wrap"><div class="code-header"><span>🔹 CREATE SCHEMA Example</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE SCHEMA</span> COMPANY AUTHORIZATION <span class="sql-string">'Jsmith'</span>;</pre></div></div>
+                <p>✅ <strong>Simple Explanation:</strong> This command declares a new database named COMPANY and the responsible user is Jsmith.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-title">📊 Data Types <span class="page-ref">lec5 - page 12-13</span></div>
+                <p><span class="badge">Important</span> Each column in a table must have a specific data type.</p>
+                <table>
+                    <tr><th>Type</th><th>Description</th><th>Example</th></tr>
+                    <tr><td>INTEGER / INT</td><td>Whole numbers (no fractions)</td><td><code>Age INT</code></td></tr>
+                    <tr><td>SMALLINT</td><td>Small numbers</td><td><code>small_num SMALLINT</code></td></tr>
+                    <tr><td>FLOAT / REAL</td><td>Decimal numbers (with fractions)</td><td><code>price FLOAT</code></td></tr>
+                    <tr><td>DECIMAL(i,j)</td><td>Fixed-point decimal (i=total digits, j=digits after decimal)</td><td><code>Salary DECIMAL(10,2)</code></td></tr>
+                    <tr><td>CHAR(n)</td><td>Fixed length string (fills with spaces if shorter)</td><td><code>Gender CHAR(1)</code></td></tr>
+                    <tr><td>VARCHAR(n)</td><td>Variable length string (uses actual length only)</td><td><code>Name VARCHAR(50)</code></td></tr>
+                    <tr><td>DATE</td><td>Date format YYYY-MM-DD</td><td><code>Bdate DATE</code></td></tr>
+                    <tr><td>TIME</td><td>Time format HH:MM:SS</td><td><code>Start_time TIME</code></td></tr>
+                    <tr><td>TIMESTAMP</td><td>Date and time with fractional seconds</td><td><code>created_at TIMESTAMP</code></td></tr>
+                </table>
+                <div class="code-wrap"><div class="code-header"><span>TIMESTAMP Example</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">TIMESTAMP</span> <span class="sql-string">'2008-09-27 09:12:47.648302'</span></pre></div></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">🔒 Constraints <span class="page-ref">lec5 - page 14-17</span></div>
+                <p><span class="badge">Constraints</span> are rules that prevent wrong data entry.</p>
+                <ul>
+                    <li><strong>NOT NULL</strong> : Column cannot be empty.</li>
+                    <li><strong>DEFAULT</strong> : Default value if user doesn't provide one.</li>
+                    <li><strong>CHECK</strong> : A condition that data must satisfy.</li>
+                    <li><strong>PRIMARY KEY</strong> : Uniquely identifies each record, cannot be NULL or duplicated.</li>
+                    <li><strong>UNIQUE</strong> : Prevents duplicate values but allows NULL.</li>
+                    <li><strong>FOREIGN KEY</strong> : Links one table to another table.</li>
+                </ul>
+                <div class="code-wrap"><div class="code-header"><span>Practical Examples</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre>Dno <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-number">1</span>;
+Dnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">CHECK</span> (Dnumber > <span class="sql-number">0</span> <span class="sql-keyword">AND</span> Dnumber &lt; <span class="sql-number">21</span>);
+<span class="sql-keyword">PRIMARY KEY</span> (Ssn);
 <span class="sql-keyword">FOREIGN KEY</span> (Dno) <span class="sql-keyword">REFERENCES</span> DEPARTMENT(Dnumber);
-Dno <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-keyword">DEFAULT</span> 1;</pre></div></div>
-            <div class="card"><div class="card-title">CREATE TABLE</div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> EMPLOYEE (
-    Ssn <span class="sql-keyword">CHAR</span>(9) <span class="sql-keyword">PRIMARY KEY</span>,
-    Fname <span class="sql-keyword">VARCHAR</span>(15),
-    Salary <span class="sql-keyword">DECIMAL</span>(10,2)
+<span class="sql-keyword">CREATE DOMAIN</span> D_NUM <span class="sql-keyword">AS INTEGER CHECK</span> (D_NUM > <span class="sql-number">0</span>);</pre></div></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">🛠️ CREATE TABLE <span class="page-ref">lec5 - page 7-11</span></div>
+                <p><span class="badge">CREATE TABLE command</span> is used to create a new table. We specify column names, data types, and constraints.</p>
+                <div class="code-wrap"><div class="code-header"><span>EMPLOYEE Table</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> EMPLOYEE (
+    Fname <span class="sql-keyword">VARCHAR</span>(15) <span class="sql-keyword">NOT NULL</span>,
+    Minit <span class="sql-keyword">CHAR</span>,
+    Lname <span class="sql-keyword">VARCHAR</span>(15) <span class="sql-keyword">NOT NULL</span>,
+    Ssn <span class="sql-keyword">CHAR</span>(9) <span class="sql-keyword">NOT NULL</span>,
+    Bdate <span class="sql-keyword">DATE</span>,
+    Address <span class="sql-keyword">VARCHAR</span>(30),
+    Sex <span class="sql-keyword">CHAR</span>,
+    Salary <span class="sql-keyword">DECIMAL</span>(10,2),
+    Super_ssn <span class="sql-keyword">CHAR</span>(9),
+    Dno <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    <span class="sql-keyword">PRIMARY KEY</span> (Ssn),
+    <span class="sql-keyword">FOREIGN KEY</span> (Super_ssn) <span class="sql-keyword">REFERENCES</span> EMPLOYEE(Ssn),
+    <span class="sql-keyword">FOREIGN KEY</span> (Dno) <span class="sql-keyword">REFERENCES</span> DEPARTMENT(Dnumber)
 );</pre></div></div>
-            <div class="card"><div class="card-title">DML Examples</div><div class="code-block"><pre><span class="sql-keyword">INSERT INTO</span> Employee <span class="sql-keyword">VALUES</span> (101, <span class="sql-string">'Ahmed'</span>, 5000);
-<span class="sql-keyword">UPDATE</span> Employee <span class="sql-keyword">SET</span> Salary = 6000 <span class="sql-keyword">WHERE</span> SSN = 101;
-<span class="sql-keyword">DELETE FROM</span> Employee <span class="sql-keyword">WHERE</span> SSN = 105;</pre></div></div>
-            <div class="card"><div class="card-title">SELECT & LIKE & BETWEEN</div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">WHERE</span> Fname <span class="sql-keyword">LIKE</span> <span class="sql-string">'A%'</span>;
-<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">WHERE</span> Salary <span class="sql-keyword">BETWEEN</span> 3000 <span class="sql-keyword">AND</span> 5000;
-<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">ORDER BY</span> Salary <span class="sql-keyword">DESC</span>;</pre></div></div>
-            <div class="card"><div class="card-title">✅ All Solutions</div>
-            <div class="code-block"><pre>Q1: SELECT * FROM Employee WHERE Fname LIKE 'A%';
-Q2: SELECT * FROM Employee WHERE Salary BETWEEN 3500 AND 5500;
-Q6: SELECT AVG(Salary) FROM Employee;
-Q17: SELECT * FROM Employee ORDER BY Salary DESC;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>DEPARTMENT Table</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> DEPARTMENT (
+    Dname <span class="sql-keyword">VARCHAR</span>(15) <span class="sql-keyword">NOT NULL</span>,
+    Dnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    Mgr_ssn <span class="sql-keyword">CHAR</span>(9) <span class="sql-keyword">NOT NULL</span>,
+    Mgr_start_date <span class="sql-keyword">DATE</span>,
+    <span class="sql-keyword">PRIMARY KEY</span> (Dnumber),
+    <span class="sql-keyword">UNIQUE</span> (Dname),
+    <span class="sql-keyword">FOREIGN KEY</span> (Mgr_ssn) <span class="sql-keyword">REFERENCES</span> EMPLOYEE(Ssn)
+);</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>DEPT_LOCATIONS Table</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> DEPT_LOCATIONS (
+    Dnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    Dlocation <span class="sql-keyword">VARCHAR</span>(15) <span class="sql-keyword">NOT NULL</span>,
+    <span class="sql-keyword">PRIMARY KEY</span> (Dnumber, Dlocation),
+    <span class="sql-keyword">FOREIGN KEY</span> (Dnumber) <span class="sql-keyword">REFERENCES</span> DEPARTMENT(Dnumber)
+);</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>PROJECT Table</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> PROJECT (
+    Pname <span class="sql-keyword">VARCHAR</span>(15) <span class="sql-keyword">NOT NULL</span>,
+    Pnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    Plocation <span class="sql-keyword">VARCHAR</span>(15),
+    Dnum <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    <span class="sql-keyword">PRIMARY KEY</span> (Pnumber),
+    <span class="sql-keyword">UNIQUE</span> (Pname),
+    <span class="sql-keyword">FOREIGN KEY</span> (Dnum) <span class="sql-keyword">REFERENCES</span> DEPARTMENT(Dnumber)
+);</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>WORKS_ON Table</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> WORKS_ON (
+    Essn <span class="sql-keyword">CHAR</span>(9) <span class="sql-keyword">NOT NULL</span>,
+    Pno <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span>,
+    Hours <span class="sql-keyword">DECIMAL</span>(3,1) <span class="sql-keyword">NOT NULL</span>,
+    <span class="sql-keyword">PRIMARY KEY</span> (Essn, Pno),
+    <span class="sql-keyword">FOREIGN KEY</span> (Essn) <span class="sql-keyword">REFERENCES</span> EMPLOYEE(Ssn),
+    <span class="sql-keyword">FOREIGN KEY</span> (Pno) <span class="sql-keyword">REFERENCES</span> PROJECT(Pnumber)
+);</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>DEPENDENT Table</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> DEPENDENT (
+    Essn <span class="sql-keyword">CHAR</span>(9) <span class="sql-keyword">NOT NULL</span>,
+    Dependent_name <span class="sql-keyword">VARCHAR</span>(15) <span class="sql-keyword">NOT NULL</span>,
+    Sex <span class="sql-keyword">CHAR</span>,
+    Bdate <span class="sql-keyword">DATE</span>,
+    Relationship <span class="sql-keyword">VARCHAR</span>(8),
+    <span class="sql-keyword">PRIMARY KEY</span> (Essn, Dependent_name),
+    <span class="sql-keyword">FOREIGN KEY</span> (Essn) <span class="sql-keyword">REFERENCES</span> EMPLOYEE(Ssn)
+);</pre></div></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">✏️ DML (Insert - Update - Delete) <span class="page-ref">lec5 - page 18-20</span></div>
+                <p><strong>🔹 INSERT INTO</strong> : Add new data.</p>
+                <div class="code-wrap"><div class="code-header"><span>INSERT Example</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">INSERT INTO</span> EMPLOYEE (Fname, Lname, Dno, Ssn) 
+<span class="sql-keyword">VALUES</span> (<span class="sql-string">'Richard'</span>, <span class="sql-string">'Marini'</span>, <span class="sql-number">4</span>, <span class="sql-string">'653298653'</span>);
+
+<span class="sql-keyword">INSERT INTO</span> tab1 <span class="sql-keyword">VALUES</span> (<span class="sql-number">111</span>, <span class="sql-string">'aaaaa'</span>, <span class="sql-number">55443321</span>);</pre></div></div>
+                <p><strong>🔹 UPDATE</strong> : Modify existing data.</p>
+                <div class="code-wrap"><div class="code-header"><span>UPDATE Example</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">UPDATE</span> PROJECT <span class="sql-keyword">SET</span> Location = <span class="sql-string">'Bellaire'</span>, Dnum = <span class="sql-number">5</span> <span class="sql-keyword">WHERE</span> Pnumber=<span class="sql-number">10</span>;
+<span class="sql-keyword">UPDATE</span> tab1 <span class="sql-keyword">SET</span> sname=<span class="sql-string">'kkkkk'</span> <span class="sql-keyword">WHERE</span> id=<span class="sql-number">222</span>;</pre></div></div>
+                <p><strong>🔹 DELETE</strong> : Delete data.</p>
+                <div class="code-wrap"><div class="code-header"><span>DELETE Examples</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">DELETE FROM</span> EMPLOYEE <span class="sql-keyword">WHERE</span> Lname=<span class="sql-string">'Brown'</span>;
+<span class="sql-keyword">DELETE FROM</span> EMPLOYEE;  <span class="sql-comment">-- Deletes all rows</span></pre></div></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">🔍 SELECT (Data Retrieval) <span class="page-ref">lec5 - page 21-31</span></div>
+                <p><span class="badge">SELECT</span> is the command used to extract data from the database.</p>
+                <div class="code-wrap"><div class="code-header"><span>Basic Examples</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> Bdate, Address <span class="sql-keyword">FROM</span> EMPLOYEE <span class="sql-keyword">WHERE</span> Fname=<span class="sql-string">'John'</span>;
+<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> EMPLOYEE;   <span class="sql-comment">-- * means all columns</span>
+<span class="sql-keyword">SELECT</span> Ssn <span class="sql-keyword">FROM</span> EMPLOYEE;</pre></div></div>
+                <p><strong>🔸 LIKE (Pattern Matching)</strong> : Uses % (any number of characters) and _ (single character).</p>
+                <div class="code-wrap"><div class="code-header"><span>LIKE Example</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> FNAME, LNAME <span class="sql-keyword">FROM</span> EMPLOYEE <span class="sql-keyword">WHERE</span> Address <span class="sql-keyword">LIKE</span> <span class="sql-string">'%Houston,TX%'</span>;</pre></div></div>
+                <p><strong>🔸 BETWEEN (Between two values)</strong></p>
+                <div class="code-wrap"><div class="code-header"><span>BETWEEN Example</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> EMPLOYEE <span class="sql-keyword">WHERE</span> (Salary <span class="sql-keyword">BETWEEN</span> <span class="sql-number">30000</span> <span class="sql-keyword">AND</span> <span class="sql-number">40000</span>) <span class="sql-keyword">AND</span> Dno = <span class="sql-number">5</span>;</pre></div></div>
+                <p><strong>🔸 ORDER BY (Sorting Results)</strong></p>
+                <div class="code-wrap"><div class="code-header"><span>ORDER BY Example</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> D.Name, E.Name <span class="sql-keyword">FROM</span> DEPARTMENT D, EMPLOYEE E <span class="sql-keyword">ORDER BY</span> D.Name, E.Name;</pre></div></div>
+                <p><strong>🔸 UNION (Combine Two Results)</strong></p>
+                <div class="code-wrap"><div class="code-header"><span>UNION Example</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre>(<span class="sql-keyword">SELECT</span> Pnumber <span class="sql-keyword">FROM</span> PROJECT, DEPARTMENT, EMPLOYEE <span class="sql-keyword">WHERE</span> Lname=<span class="sql-string">'Smith'</span>)
+<span class="sql-keyword">UNION</span>
+(<span class="sql-keyword">SELECT</span> Pnumber <span class="sql-keyword">FROM</span> PROJECT, WORKS_ON, EMPLOYEE <span class="sql-keyword">WHERE</span> Lname=<span class="sql-string">'Smith'</span>);</pre></div></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">🏢 CompanyDB Database (All Codes at Once)</div>
+                <div class="code-wrap"><div class="code-header"><span>Create Database, Tables, and Insert Data</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div>
+                <div class="code-block"><pre><span class="sql-keyword">DROP DATABASE IF EXISTS</span> CompanyDB;
+<span class="sql-keyword">CREATE DATABASE</span> CompanyDB;
+<span class="sql-keyword">USE</span> CompanyDB;
+
+<span class="sql-keyword">CREATE TABLE</span> Department ( Dnumber <span class="sql-keyword">INT PRIMARY KEY</span>, Dname <span class="sql-keyword">VARCHAR</span>(50) );
+<span class="sql-keyword">CREATE TABLE</span> Employee ( SSN <span class="sql-keyword">INT PRIMARY KEY</span>, Fname <span class="sql-keyword">VARCHAR</span>(50), Salary <span class="sql-keyword">FLOAT</span>, Dno <span class="sql-keyword">INT</span>, <span class="sql-keyword">FOREIGN KEY</span>(Dno) <span class="sql-keyword">REFERENCES</span> Department(Dnumber) );
+<span class="sql-keyword">CREATE TABLE</span> Works_On ( Essn <span class="sql-keyword">INT</span>, Pno <span class="sql-keyword">INT</span>, Hours <span class="sql-keyword">FLOAT</span>, <span class="sql-keyword">PRIMARY KEY</span>(Essn,Pno) );
+
+<span class="sql-keyword">INSERT INTO</span> Department <span class="sql-keyword">VALUES</span> (1,<span class="sql-string">'CS'</span>),(2,<span class="sql-string">'IT'</span>),(3,<span class="sql-string">'HR'</span>);
+<span class="sql-keyword">INSERT INTO</span> Employee <span class="sql-keyword">VALUES</span> 
+(101,<span class="sql-string">'Ahmed'</span>,5000,1),(102,<span class="sql-string">'Mona'</span>,4500,2),(103,<span class="sql-string">'Ali'</span>,4000,1),
+(104,<span class="sql-string">'Sara'</span>,5500,3),(105,<span class="sql-string">'Omar'</span>,3800,2);
+<span class="sql-keyword">INSERT INTO</span> Works_On <span class="sql-keyword">VALUES</span> (101,10,20),(102,20,15),(103,10,10),(104,30,25),(105,20,12);</pre></div></div>
+            </div>
+
+            <div class="card">
+                <div class="card-title">✅ All Exam Questions Solutions</div>
+                <div class="code-wrap"><div class="code-header"><span>Q1 : Names starting with 'A'</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">WHERE</span> Fname <span class="sql-keyword">LIKE</span> <span class="sql-string">'A%'</span>;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q2 : Salary between 3500 and 5500</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">WHERE</span> Salary <span class="sql-keyword">BETWEEN</span> 3500 <span class="sql-keyword">AND</span> 5500;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q3 : Employee names and department names (JOIN)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> Employee.Fname, Department.Dname 
+<span class="sql-keyword">FROM</span> Employee, Department 
+<span class="sql-keyword">WHERE</span> Employee.Dno = Department.Dnumber;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q4 : Insert new department</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">INSERT INTO</span> Department <span class="sql-keyword">VALUES</span> (4, <span class="sql-string">'Finance'</span>);</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q5 : Delete employee with SSN = 107</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">DELETE FROM</span> Employee <span class="sql-keyword">WHERE</span> SSN = 107;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q6 : Average salary</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> <span class="sql-keyword">AVG</span>(Salary) <span class="sql-keyword">FROM</span> Employee;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q10 : Number of employees</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> <span class="sql-keyword">COUNT</span>(*) <span class="sql-keyword">FROM</span> Employee;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q12 : Maximum salary</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> <span class="sql-keyword">MAX</span>(Salary) <span class="sql-keyword">FROM</span> Employee;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q13 : Number of employees per department (GROUP BY)</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> Dno, <span class="sql-keyword">COUNT</span>(*) <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">GROUP BY</span> Dno;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q17 : Order by salary descending</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">ORDER BY</span> Salary <span class="sql-keyword">DESC</span>;</pre></div></div>
+                <div class="code-wrap"><div class="code-header"><span>Q18 : Names and salaries ordered by name</span><button class="copy-btn" onclick="copyCode(this)">Copy</button></div><div class="code-block"><pre><span class="sql-keyword">SELECT</span> Fname, Salary <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">ORDER BY</span> Fname;</pre></div></div>
+                <p><span class="badge">Important Note</span> All these codes are taken from the original lectures (lec5 and lec6) and nothing has been added from outside.</p>
+            </div>
         </div>
     </div>
 
@@ -486,7 +660,8 @@ Q17: SELECT * FROM Employee ORDER BY Salary DESC;</pre></div></div>
             <a href="https://www.youtube.com/@YOUSSEFSOBHY1" target="_blank"><i class="fab fa-youtube"></i></a>
             <a href="https://t.me/YOU1_SSEF" target="_blank"><i class="fab fa-telegram"></i></a>
         </div>
-        <p>📚 جميع الأكواد مأخوذة من المحاضرات الأصلية lec5.pdf و lec6.pdf - تم التطوير بواسطة Youssef Sobhy</p>
+        <p>📚 All codes are taken from original lectures lec5.pdf and lec6.pdf - Developed by Youssef Sobhy</p>
+        <p style="font-size:0.8rem; margin-top:0.5rem;">📞 Phone/WhatsApp: 01066781530 | 📺 YouTube: YOUSSEFSOBHY1 | 📨 Telegram: @YOU1_SSEF</p>
     </div>
 </div>
 
@@ -508,12 +683,17 @@ Q17: SELECT * FROM Employee ORDER BY Salary DESC;</pre></div></div>
     chatBtn.onclick = () => chatWin.classList.toggle('open');
     closeChat.onclick = () => chatWin.classList.remove('open');
     function addMsg(text, isUser=false){ let div = document.createElement('div'); div.className = `message ${isUser ? 'user' : 'bot'}`; div.innerHTML = text; document.getElementById('msgs').appendChild(div); document.getElementById('msgs').scrollTop = document.getElementById('msgs').scrollHeight; }
-    function botReply(q){ let lower = q.toLowerCase();
-        if(lower.includes('مين عمل')||lower.includes('المطور')||lower.includes('يوسف')) return "👨‍💻 الموقع تم تطويره بواسطة <strong>Youssef Sobhy</strong>. تواصل معه: <br>📞 واتساب +201066781530<br>▶️ يوتيوب YOUSSEFSOBHY1<br>📨 تليجرام @YOU1_SSEF";
+    function botReply(q){
+        let lower = q.toLowerCase();
+        if(lower.includes('مين عمل')||lower.includes('المطور')||lower.includes('يوسف')||lower.includes('who made')||lower.includes('developer')||lower.includes('about you')){
+            return "👨‍💻 أنا <strong>يوسف صبحى</strong>، طالب بجامعة سفنكس كلية حاسبات وذكاء اصطناعي.<br>📞 رقم التليفون والواتساب: <strong>01066781530</strong><br>▶️ قناة اليوتيوب: <strong>YOUSSEFSOBHY1</strong><br>📨 تليجرام: <strong>@YOU1_SSEF</strong>";
+        }
         if(lower.includes('sql')||lower.includes('select')) return "📖 SQL هي لغة الاستعلامات. أوامرها الأساسية: SELECT, INSERT, UPDATE, DELETE. راجع قسم SELECT في المحاضرة lec5 صفحة 21.";
         if(lower.includes('like')) return "🔍 LIKE تستخدم للبحث بنمط. مثال: WHERE Address LIKE '%Cairo%' . موجود في lec5 صفحة 28.";
         if(lower.includes('مرتب')||lower.includes('salary')) return "💰 للإستعلام عن المرتب: SELECT Salary FROM Employee. لترتيب تنازلي: ORDER BY Salary DESC. راجع lec5 صفحة 29-30.";
-        return "🤖 أنا الذكاء الاصطناعي لـ Youssef Sobhy. اسأل عن SQL, SELECT, LIKE, BETWEEN, أو المطور.";
+        if(lower.includes('primary')) return "🔑 PRIMARY KEY هو المفتاح الأساسي الذي يحدد كل سجل بشكل فريد. موجود في lec5 صفحة 16.";
+        if(lower.includes('foreign')) return "🔗 FOREIGN KEY هو المفتاح الأجنبي الذي يربط جدول بجدول آخر. موجود في lec5 صفحة 8-11.";
+        return "🤖 أنا الذكاء الاصطناعي لـ <strong>يوسف صبحى</strong> (طالب بجامعة سفنكس كلية حاسبات وذكاء اصطناعي). اسأل عن SQL, SELECT, LIKE, BETWEEN, PRIMARY KEY, FOREIGN KEY، أو أسأل عني أنا.";
     }
     document.getElementById('sendMsg').onclick = () => { let inp = document.getElementById('chatInp'); let txt = inp.value.trim(); if(txt){ addMsg(txt, true); setTimeout(()=>addMsg(botReply(txt), false), 300); inp.value=''; } };
     document.getElementById('chatInp').addEventListener('keypress', (e) => { if(e.key === 'Enter') document.getElementById('sendMsg').click(); });
