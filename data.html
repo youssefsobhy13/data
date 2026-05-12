@@ -1,0 +1,936 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YOUSSEF SOBHY | شرح SQL من المحاضرات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+            background: #0d1117;
+            color: #e0e0e0;
+            line-height: 1.6;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100vh;
+            background: #161b22;
+            border-right: 3px solid #e94560;
+            padding: 1.5rem 0;
+            z-index: 1000;
+            overflow-y: auto;
+            transform: translateX(100%);
+            transition: transform 0.3s ease;
+            box-shadow: -5px 0 30px rgba(0,0,0,0.5);
+        }
+
+        .sidebar.open {
+            transform: translateX(0);
+        }
+
+        .sidebar-nav {
+            padding: 0 1rem;
+        }
+
+        .sidebar-nav-title {
+            color: #e94560;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin: 1rem 0 0.8rem 0;
+            padding-right: 0.5rem;
+            border-right: 3px solid #e94560;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.7rem 1rem;
+            color: #c0c0c0;
+            text-decoration: none;
+            border-radius: 10px;
+            margin-bottom: 0.3rem;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .sidebar-nav a:hover {
+            background: #2d2d42;
+            color: #00ff9d;
+            transform: translateX(-3px);
+        }
+
+        .sidebar-nav a i {
+            width: 24px;
+            font-size: 1rem;
+            color: #e94560;
+        }
+
+        .page-badge {
+            background: #e94560;
+            color: white;
+            padding: 0.15rem 0.5rem;
+            border-radius: 15px;
+            font-size: 0.65rem;
+            margin-right: auto;
+        }
+
+        .sidebar-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 999;
+            display: none;
+        }
+
+        .sidebar-overlay.active {
+            display: block;
+        }
+
+        .main-content {
+            width: 100%;
+            min-height: 100vh;
+        }
+
+        /* Home Button */
+        .home-button {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: linear-gradient(135deg, #e94560, #ff6b8a);
+            padding: 12px 20px;
+            border-radius: 40px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            color: white;
+            font-size: 1rem;
+            z-index: 100;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        /* Chat Button */
+        .chat-button {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            background: linear-gradient(135deg, #00ff9d, #00bcd4);
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            color: #0d1117;
+            font-size: 1.8rem;
+            z-index: 100;
+            box-shadow: 0 4px 15px rgba(0,255,157,0.4);
+        }
+
+        .chat-button:hover {
+            transform: scale(1.1);
+        }
+
+        /* Chat Window */
+        .chat-window {
+            position: fixed;
+            bottom: 100px;
+            left: 25px;
+            width: 350px;
+            height: 500px;
+            background: #161b22;
+            border-radius: 20px;
+            border: 2px solid #e94560;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            z-index: 200;
+            transform: scale(0);
+            transform-origin: bottom left;
+            transition: transform 0.3s ease;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .chat-window.open {
+            transform: scale(1);
+        }
+
+        .chat-header {
+            background: #e94560;
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .chat-header h3 {
+            font-size: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .close-chat {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        .chat-messages {
+            flex: 1;
+            padding: 1rem;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .message {
+            max-width: 85%;
+            padding: 0.6rem 1rem;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .message.bot {
+            background: #2d2d42;
+            color: #00ff9d;
+            align-self: flex-start;
+            border-bottom-left-radius: 5px;
+        }
+
+        .message.user {
+            background: #e94560;
+            color: white;
+            align-self: flex-end;
+            border-bottom-right-radius: 5px;
+        }
+
+        .chat-input-area {
+            display: flex;
+            padding: 0.8rem;
+            gap: 0.5rem;
+            border-top: 1px solid #2d2d42;
+        }
+
+        .chat-input {
+            flex: 1;
+            background: #0d1117;
+            border: 1px solid #2d2d42;
+            border-radius: 20px;
+            padding: 0.6rem 1rem;
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .chat-input:focus {
+            outline: none;
+            border-color: #e94560;
+        }
+
+        .send-btn {
+            background: #e94560;
+            border: none;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Hero Header */
+        .hero-header {
+            background: linear-gradient(135deg, #0d2b3e 0%, #161b22 100%);
+            padding: 2rem;
+            text-align: center;
+            border-bottom: 3px solid #e94560;
+        }
+
+        .profile-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .profile-img {
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e94560, #00ff9d);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            border: 4px solid #ffd700;
+        }
+
+        .profile-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .profile-img .no-img {
+            font-size: 2.5rem;
+            color: white;
+            font-weight: bold;
+        }
+
+        .profile-info h1 {
+            font-size: 2.5rem;
+            color: #ffd700;
+        }
+
+        .dev-by {
+            margin-top: 0.8rem;
+            font-size: 1rem;
+            color: #00ff9d;
+        }
+
+        .lang-wrapper {
+            display: flex;
+            justify-content: flex-end;
+            padding: 1rem 2rem;
+            background: #161b22;
+            border-bottom: 1px solid #2d2d42;
+        }
+
+        .lang-btn {
+            background: #2d2d42;
+            border: none;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            color: #fff;
+            cursor: pointer;
+            margin: 0 0.2rem;
+        }
+
+        .lang-btn.active {
+            background: #e94560;
+        }
+
+        .container {
+            padding: 1.5rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-card {
+            background: #161b22;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-right: 4px solid #e94560;
+        }
+
+        .section-title {
+            color: #00ff9d;
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .section-title .page-ref {
+            background: #e94560;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 20px;
+        }
+
+        .code-wrapper {
+            margin: 1rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid #2d2d42;
+        }
+
+        .code-header {
+            background: #0d1117;
+            padding: 0.5rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.75rem;
+            color: #888;
+        }
+
+        .copy-btn {
+            background: #e94560;
+            border: none;
+            color: white;
+            padding: 0.2rem 0.8rem;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .code-block {
+            background: #0d1117;
+            padding: 1.2rem;
+            overflow-x: auto;
+            direction: ltr;
+            text-align: left;
+        }
+
+        .code-block pre {
+            font-family: 'Fira Code', monospace;
+            font-size: 0.8rem;
+            margin: 0;
+            color: #d4d4d4;
+        }
+
+        .sql-keyword { color: #569cd6; }
+        .sql-string { color: #ce9178; }
+        .sql-number { color: #b5cea8; }
+        .sql-comment { color: #6a9955; }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: #0d1117;
+        }
+
+        .data-table th, .data-table td {
+            border: 1px solid #2d2d42;
+            padding: 0.6rem;
+            text-align: center;
+        }
+
+        .data-table th {
+            background: #0d2b3e;
+            color: #00ff9d;
+        }
+
+        .dml-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .dml-card {
+            background: #0d2b3e;
+            padding: 1rem;
+            border-radius: 10px;
+            text-align: center;
+            border: 1px solid #e94560;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 1.5rem;
+            background: #0d2b3e;
+            border-top: 2px solid #e94560;
+        }
+
+        .social-footer {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .social-footer a {
+            color: #aaa;
+            font-size: 1.5rem;
+            transition: 0.3s;
+        }
+
+        .social-footer a.whatsapp:hover { color: #25D366; }
+        .social-footer a.youtube:hover { color: #FF0000; }
+        .social-footer a.telegram:hover { color: #0088cc; }
+
+        .badge {
+            background: #e94560;
+            padding: 0.2rem 0.6rem;
+            border-radius: 15px;
+            font-size: 0.7rem;
+            display: inline-block;
+            margin-left: 0.3rem;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .profile-img { width: 100px; height: 100px; }
+            .profile-info h1 { font-size: 1.6rem; }
+            .chat-window { width: 300px; left: 10px; bottom: 90px; }
+        }
+
+        .arabic, .english { display: block; }
+        body.en-mode .arabic { display: none; }
+        body.en-mode .english { display: block; }
+        body:not(.en-mode) .english { display: none; }
+    </style>
+</head>
+<body>
+
+<div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-nav">
+        <div class="sidebar-nav-title"><i class="fas fa-compass"></i> القائمة الرئيسية</div>
+        <a href="#" onclick="scrollToTop(); closeSidebar(); return false;"><i class="fas fa-home"></i> الرئيسية <span class="page-badge">home</span></a>
+        <a href="#" onclick="scrollToSection('intro'); closeSidebar(); return false;"><i class="fas fa-info-circle"></i> مقدمة SQL <span class="page-badge">lec5 p3</span></a>
+        <a href="#" onclick="scrollToSection('datatypes'); closeSidebar(); return false;"><i class="fas fa-database"></i> أنواع البيانات <span class="page-badge">lec5 p12-13</span></a>
+        <a href="#" onclick="scrollToSection('constraints'); closeSidebar(); return false;"><i class="fas fa-lock"></i> القيود <span class="page-badge">lec5 p14-17</span></a>
+        <a href="#" onclick="scrollToSection('dml'); closeSidebar(); return false;"><i class="fas fa-edit"></i> DML <span class="page-badge">lec5 p18-20</span></a>
+        <a href="#" onclick="scrollToSection('select'); closeSidebar(); return false;"><i class="fas fa-search"></i> SELECT <span class="page-badge">lec5 p21-31</span></a>
+        <a href="#" onclick="scrollToSection('database'); closeSidebar(); return false;"><i class="fas fa-database"></i> CompanyDB <span class="page-badge">قاعدة البيانات</span></a>
+        <a href="#" onclick="scrollToSection('solved'); closeSidebar(); return false;"><i class="fas fa-check-circle"></i> حلول الأسئلة <span class="page-badge">Exam</span></a>
+    </div>
+</div>
+
+<button class="home-button" id="homeBtn"><i class="fas fa-home"></i><span>Home</span></button>
+
+<!-- Chat Button -->
+<button class="chat-button" id="chatBtn"><i class="fas fa-comment-dots"></i></button>
+
+<!-- Chat Window -->
+<div class="chat-window" id="chatWindow">
+    <div class="chat-header">
+        <h3><i class="fas fa-robot"></i> الذكاء الاصطناعي - Youssef Sobhy</h3>
+        <button class="close-chat" id="closeChatBtn"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="chat-messages" id="chatMessages">
+        <div class="message bot">
+            👋 مرحباً! أنا الذكاء الاصطناعي الخاص بـ <strong>Youssef Sobhy</strong>.<br>
+            اتفضل اسألني أي سؤال عن SQL أو عن المطور!
+        </div>
+    </div>
+    <div class="chat-input-area">
+        <input type="text" class="chat-input" id="chatInput" placeholder="اكتب سؤالك هنا...">
+        <button class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
+
+<div class="main-content">
+    <div class="hero-header">
+        <div class="profile-container">
+            <div class="profile-img">
+                <img src="profile.jpg" alt="YOUSSEF SOBHY" onerror="this.parentElement.innerHTML='<div class=\'no-img\'>Y<br>S</div>'">
+            </div>
+            <div class="profile-info">
+                <h1>YOUSSEF SOBHY</h1>
+                <div class="dev-by"><i class="fas fa-code"></i> تم التطوير بواسطة YOUSSEF SOBHY</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="lang-wrapper">
+        <button class="lang-btn active" onclick="setLanguage('ar')"><i class="fas fa-language"></i> العربية</button>
+        <button class="lang-btn" onclick="setLanguage('en')"><i class="fas fa-language"></i> English</button>
+    </div>
+
+    <div class="container">
+
+        <!-- INTRO -->
+        <div id="intro" class="section-card">
+            <div class="arabic">
+                <h2 class="section-title">📖 SQL <span class="page-ref">lec5 - صفحة 3</span></h2>
+                <p><span class="badge">تعريف</span> SQL هي لغة أنظمة إدارة قواعد البيانات الأكثر استخداماً.</p>
+                <p><span class="badge">الاستعلام</span> هو إنشاء جدول جديد يحتوي على نتائج بمعايير محددة من جداول قاعدة البيانات.</p>
+                <div class="dml-grid">
+                    <div class="dml-card"><i class="fas fa-code"></i><br><strong>DDL</strong><br>إنشاء/تعديل/حذف الجداول</div>
+                    <div class="dml-card"><i class="fas fa-pencil-alt"></i><br><strong>DML</strong><br>إدراج/حذف/تعديل/استعلام</div>
+                    <div class="dml-card"><i class="fas fa-shield-alt"></i><br><strong>DCL</strong><br>حماية وأمان</div>
+                </div>
+                <div class="code-wrapper"><div class="code-header"><span>CREATE SCHEMA</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div>
+                <div class="code-block"><pre><span class="sql-keyword">CREATE SCHEMA</span> COMPANY AUTHORIZATION <span class="sql-string">'Jsmith'</span>;</pre></div></div>
+            </div>
+            <div class="english">
+                <h2 class="section-title">📖 SQL <span class="page-ref">lec5 - page 3</span></h2>
+                <p><span class="badge">Definition</span> SQL is the most widely used database language.</p>
+                <div class="dml-grid">
+                    <div class="dml-card"><i class="fas fa-code"></i><br><strong>DDL</strong><br>Create/alter/delete tables</div>
+                    <div class="dml-card"><i class="fas fa-pencil-alt"></i><br><strong>DML</strong><br>Insert/delete/modify/query</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- DATA TYPES -->
+        <div id="datatypes" class="section-card">
+            <div class="arabic">
+                <h2 class="section-title">📊 أنواع البيانات <span class="page-ref">lec5 - صفحة 12-13</span></h2>
+                <table class="data-table">
+                    <thead><tr><th>النوع</th><th>الوصف</th><th>مثال</th></tr></thead>
+                    <tbody>
+                        <tr><td>INTEGER / INT</td><td>أرقام صحيحة</td><td><code>Age INT</code></td></tr>
+                        <tr><td>CHAR(n)</td><td>نص بطول ثابت</td><td><code>Gender CHAR(1)</code></td></tr>
+                        <tr><td>VARCHAR(n)</td><td>نص بطول متغير</td><td><code>Name VARCHAR(50)</code></td></tr>
+                        <tr><td>DATE</td><td>تاريخ YYYY-MM-DD</td><td><code>Bdate DATE</code></td></tr>
+                        <tr><td>DECIMAL(i,j)</td><td>رقم عشري</td><td><code>Salary DECIMAL(10,2)</code></td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="english">
+                <h2 class="section-title">📊 Data Types <span class="page-ref">lec5 - page 12-13</span></h2>
+                <table class="data-table"><thead><tr><th>Type</th><th>Description</th><th>Example</th></tr></thead>
+                <tbody><tr><td>INTEGER</td><td>Integer numbers</td><td><code>Age INT</code></td></tr>
+                <tr><td>VARCHAR(n)</td><td>Variable string</td><td><code>Name VARCHAR(50)</code></td></tr></tbody></table>
+            </div>
+        </div>
+
+        <!-- CONSTRAINTS -->
+        <div id="constraints" class="section-card">
+            <div class="arabic">
+                <h2 class="section-title">🔒 القيود <span class="page-ref">lec5 - صفحة 14-17</span></h2>
+                <div class="code-wrapper"><div class="code-header"><span>DEFAULT & CHECK</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div>
+                <div class="code-block"><pre>Dno <span class="sql-keyword">INT</span> <span class="sql-keyword">NOT NULL</span> <span class="sql-keyword">DEFAULT</span> <span class="sql-number">1</span>;
+Dnumber <span class="sql-keyword">INT</span> <span class="sql-keyword">CHECK</span> (Dnumber > <span class="sql-number">0</span> <span class="sql-keyword">AND</span> Dnumber &lt; <span class="sql-number">21</span>);
+<span class="sql-keyword">PRIMARY KEY</span> (Ssn);
+<span class="sql-keyword">FOREIGN KEY</span> (Dno) <span class="sql-keyword">REFERENCES</span> DEPARTMENT(Dnumber);</pre></div></div>
+            </div>
+            <div class="english"><h2 class="section-title">🔒 Constraints</h2>
+            <div class="code-block"><pre><span class="sql-keyword">PRIMARY KEY</span> (Ssn);
+<span class="sql-keyword">FOREIGN KEY</span> (Dno) <span class="sql-keyword">REFERENCES</span> Department(Dnumber);</pre></div></div>
+        </div>
+
+        <!-- DML -->
+        <div id="dml" class="section-card">
+            <div class="arabic">
+                <h2 class="section-title">✏️ DML <span class="page-ref">lec5 - صفحة 18-20</span></h2>
+                <div class="code-wrapper"><div class="code-header"><span>INSERT</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div>
+                <div class="code-block"><pre><span class="sql-keyword">INSERT INTO</span> Employee <span class="sql-keyword">VALUES</span> 
+(101, <span class="sql-string">'Ahmed'</span>, <span class="sql-string">'A'</span>, <span class="sql-string">'Ali'</span>, <span class="sql-string">'2000-05-01'</span>, <span class="sql-string">'Cairo'</span>, <span class="sql-string">'M'</span>, 5000, 1, <span class="sql-keyword">NULL</span>),
+(102, <span class="sql-string">'Mona'</span>, <span class="sql-string">'M'</span>, <span class="sql-string">'Hassan'</span>, <span class="sql-string">'1999-07-10'</span>, <span class="sql-string">'Giza'</span>, <span class="sql-string">'F'</span>, 4500, 2, 101),
+(103, <span class="sql-string">'Ali'</span>, <span class="sql-string">'K'</span>, <span class="sql-string">'Omar'</span>, <span class="sql-string">'2001-03-15'</span>, <span class="sql-string">'Alex'</span>, <span class="sql-string">'M'</span>, 4000, 1, 101),
+(104, <span class="sql-string">'Sara'</span>, <span class="sql-string">'S'</span>, <span class="sql-string">'Mahmoud'</span>, <span class="sql-string">'1998-09-20'</span>, <span class="sql-string">'Cairo'</span>, <span class="sql-string">'F'</span>, 5500, 3, <span class="sql-keyword">NULL</span>),
+(105, <span class="sql-string">'Omar'</span>, <span class="sql-string">'O'</span>, <span class="sql-string">'Fathy'</span>, <span class="sql-string">'2002-01-11'</span>, <span class="sql-string">'Giza'</span>, <span class="sql-string">'M'</span>, 3800, 2, 102);
+
+<span class="sql-keyword">UPDATE</span> Employee <span class="sql-keyword">SET</span> Salary = 6000 <span class="sql-keyword">WHERE</span> SSN = 101;
+<span class="sql-keyword">DELETE FROM</span> Employee <span class="sql-keyword">WHERE</span> SSN = 105;</pre></div></div>
+            </div>
+            <div class="english"><h2 class="section-title">✏️ DML</h2>
+            <div class="code-block"><pre><span class="sql-keyword">INSERT INTO</span> Employee <span class="sql-keyword">VALUES</span> (101, <span class="sql-string">'Ahmed'</span>, ...);
+<span class="sql-keyword">UPDATE</span> Employee <span class="sql-keyword">SET</span> Salary = 6000 <span class="sql-keyword">WHERE</span> SSN = 101;
+<span class="sql-keyword">DELETE FROM</span> Employee <span class="sql-keyword">WHERE</span> SSN = 105;</pre></div></div>
+        </div>
+
+        <!-- SELECT -->
+        <div id="select" class="section-card">
+            <div class="arabic">
+                <h2 class="section-title">🔍 SELECT <span class="page-ref">lec5 - صفحة 21-31</span></h2>
+                <div class="code-wrapper"><div class="code-header"><span>SELECT & LIKE & BETWEEN</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div>
+                <div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">WHERE</span> Fname=<span class="sql-string">'John'</span>;
+<span class="sql-keyword">SELECT</span> Fname, Lname <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">WHERE</span> Address <span class="sql-keyword">LIKE</span> <span class="sql-string">'%Houston%'</span>;
+<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">WHERE</span> Salary <span class="sql-keyword">BETWEEN</span> 30000 <span class="sql-keyword">AND</span> 40000;
+<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">ORDER BY</span> Salary <span class="sql-keyword">DESC</span>;</pre></div></div>
+            </div>
+            <div class="english"><h2 class="section-title">🔍 SELECT</h2>
+            <div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">WHERE</span> Salary <span class="sql-keyword">BETWEEN</span> 30000 <span class="sql-keyword">AND</span> 40000;
+<span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">ORDER BY</span> Salary <span class="sql-keyword">DESC</span>;</pre></div></div>
+        </div>
+
+        <!-- COMPANY DATABASE (مختصر) -->
+        <div id="database" class="section-card">
+            <div class="arabic">
+                <h2 class="section-title">🏢 CompanyDB <span class="page-ref">قاعدة بيانات المثال</span></h2>
+                <div class="code-wrapper"><div class="code-header"><span>إنشاء الجداول (DDL)</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div>
+                <div class="code-block"><pre><span class="sql-keyword">CREATE TABLE</span> Department (
+    Dnumber <span class="sql-keyword">INT PRIMARY KEY</span>,
+    Dname <span class="sql-keyword">VARCHAR</span>(50) <span class="sql-keyword">NOT NULL</span>
+);
+
+<span class="sql-keyword">CREATE TABLE</span> Employee (
+    SSN <span class="sql-keyword">INT PRIMARY KEY</span>,
+    Fname <span class="sql-keyword">VARCHAR</span>(50),
+    Salary <span class="sql-keyword">FLOAT</span>,
+    Dno <span class="sql-keyword">INT</span>,
+    <span class="sql-keyword">FOREIGN KEY</span> (Dno) <span class="sql-keyword">REFERENCES</span> Department(Dnumber)
+);
+
+<span class="sql-keyword">CREATE TABLE</span> Works_On (
+    Essn <span class="sql-keyword">INT</span>,
+    Pno <span class="sql-keyword">INT</span>,
+    Hours <span class="sql-keyword">FLOAT</span>,
+    <span class="sql-keyword">PRIMARY KEY</span> (Essn, Pno)
+);</pre></div></div>
+            </div>
+        </div>
+
+        <!-- SOLVED QUESTIONS -->
+        <div id="solved" class="section-card">
+            <div class="arabic">
+                <h2 class="section-title">✅ حلول الأسئلة <span class="page-ref">Exam Questions</span></h2>
+                <div class="code-wrapper"><div class="code-header"><span>Q1: أسماء تبدأ بـ A</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div>
+                <div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">WHERE</span> Fname <span class="sql-keyword">LIKE</span> <span class="sql-string">'A%'</span>;</pre></div></div>
+                <div class="code-wrapper"><div class="code-header"><span>Q2: مرتب بين 3500 و 5500</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div>
+                <div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">WHERE</span> Salary <span class="sql-keyword">BETWEEN</span> 3500 <span class="sql-keyword">AND</span> 5500;</pre></div></div>
+                <div class="code-wrapper"><div class="code-header"><span>Q3: أسماء موظفين وأقسام</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div>
+                <div class="code-block"><pre><span class="sql-keyword">SELECT</span> Employee.Fname, Department.Dname 
+<span class="sql-keyword">FROM</span> Employee, Department 
+<span class="sql-keyword">WHERE</span> Employee.Dno = Department.Dnumber;</pre></div></div>
+                <div class="code-wrapper"><div class="code-header"><span>Q4: إدراج قسم جديد</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div>
+                <div class="code-block"><pre><span class="sql-keyword">INSERT INTO</span> Department <span class="sql-keyword">VALUES</span> (4, <span class="sql-string">'Finance'</span>);</pre></div></div>
+                <div class="code-wrapper"><div class="code-header"><span>Q6: متوسط المرتبات</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div>
+                <div class="code-block"><pre><span class="sql-keyword">SELECT</span> <span class="sql-keyword">AVG</span>(Salary) <span class="sql-keyword">FROM</span> Employee;</pre></div></div>
+                <div class="code-wrapper"><div class="code-header"><span>Q17: ترتيب تنازلي حسب المرتب</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div>
+                <div class="code-block"><pre><span class="sql-keyword">SELECT</span> * <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">ORDER BY</span> Salary <span class="sql-keyword">DESC</span>;</pre></div></div>
+                <div class="code-wrapper"><div class="code-header"><span>متوسط المرتب لكل قسم</span><button class="copy-btn" onclick="copyCode(this)">نسخ</button></div>
+                <div class="code-block"><pre><span class="sql-keyword">SELECT</span> Dno, <span class="sql-keyword">AVG</span>(Salary) <span class="sql-keyword">FROM</span> Employee <span class="sql-keyword">GROUP BY</span> Dno;</pre></div></div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="footer">
+        <div class="social-footer">
+            <a href="https://wa.me/201066781530" target="_blank" class="whatsapp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.youtube.com/@YOUSSEFSOBHY1" target="_blank" class="youtube"><i class="fab fa-youtube"></i></a>
+            <a href="https://t.me/YOU1_SSEF" target="_blank" class="telegram"><i class="fab fa-telegram"></i></a>
+        </div>
+        <p>📚 المحتوى مأخوذ من محاضرات قواعد البيانات (lec5.pdf و lec6.pdf)</p>
+        <p>تم التطوير بواسطة YOUSSEF SOBHY</p>
+    </div>
+</div>
+
+<script>
+    // اللغة
+    function setLanguage(lang) {
+        if (lang === 'ar') {
+            document.body.classList.remove('en-mode');
+            document.querySelectorAll('.lang-btn')[0].classList.add('active');
+            document.querySelectorAll('.lang-btn')[1].classList.remove('active');
+        } else {
+            document.body.classList.add('en-mode');
+            document.querySelectorAll('.lang-btn')[1].classList.add('active');
+            document.querySelectorAll('.lang-btn')[0].classList.remove('active');
+        }
+    }
+
+    // التمرير
+    function scrollToSection(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            const offset = 70;
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+            window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+        }
+    }
+
+    function scrollToTop() { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+    // القائمة الجانبية
+    function openSidebar() {
+        document.getElementById('sidebar').classList.add('open');
+        document.getElementById('sidebarOverlay').classList.add('active');
+    }
+
+    function closeSidebar() {
+        document.getElementById('sidebar').classList.remove('open');
+        document.getElementById('sidebarOverlay').classList.remove('active');
+    }
+
+    // نسخ الكود
+    function copyCode(btn) {
+        const wrapper = btn.closest('.code-wrapper');
+        const codeBlock = wrapper.querySelector('.code-block pre');
+        const code = codeBlock.innerText;
+        navigator.clipboard.writeText(code).then(() => {
+            const originalText = btn.innerText;
+            btn.innerText = 'تم النسخ!';
+            setTimeout(() => { btn.innerText = originalText; }, 1500);
+        });
+    }
+
+    // ========== نظام الشات (AI) ==========
+    const chatWindow = document.getElementById('chatWindow');
+    const chatBtn = document.getElementById('chatBtn');
+    const closeChatBtn = document.getElementById('closeChatBtn');
+    const chatMessages = document.getElementById('chatMessages');
+    const chatInput = document.getElementById('chatInput');
+    const sendBtn = document.getElementById('sendBtn');
+
+    chatBtn.onclick = () => chatWindow.classList.toggle('open');
+    closeChatBtn.onclick = () => chatWindow.classList.remove('open');
+
+    function addMessage(text, isUser = false) {
+        const div = document.createElement('div');
+        div.className = `message ${isUser ? 'user' : 'bot'}`;
+        div.innerHTML = text;
+        chatMessages.appendChild(div);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+    }
+
+    // الذكاء الاصطناعي
+    function getAIResponse(question) {
+        const q = question.toLowerCase();
+        
+        // معلومات عن المطور
+        if (q.includes('من عمل') || q.includes('المطور') || q.includes('صاحب') || q.includes('يوسف') || q.includes(' creator') || q.includes('who made')) {
+            return `👨‍💻 <strong>Youssef Sobhy</strong> هو مطور هذا الموقع!<br>
+                    📞 واتساب: <strong>+201066781530</strong><br>
+                    ▶️ يوتيوب: <strong>YOUSSEFSOBHY1</strong><br>
+                    📨 تليجرام: <strong>@YOU1_SSEF</strong><br>
+                    ✨ تم تطوير هذا الموقع لشرح SQL كما ورد في المحاضرات دون إضافة أو تعديل.`;
+        }
+        
+        // SQL
+        if (q.includes('sql') || q.includes('ما هي') || q.includes('what is sql')) {
+            return `📖 <strong>SQL</strong> هي لغة أنظمة إدارة قواعد البيانات الأكثر استخداماً في قواعد البيانات الحالية.<br>
+                    📌 تنقسم إلى:<br>
+                    - <strong>DDL</strong>: إنشاء/تعديل/حذف الجداول<br>
+                    - <strong>DML</strong>: إدراج/حذف/تعديل/استعلام البيانات<br>
+                    - <strong>DCL</strong>: حماية وأمان قاعدة البيانات<br>
+                    📍 المرجع: lec5 - صفحة 3-4`;
+        }
+        
+        // SELECT
+        if (q.includes('select') || q.includes('استعلام')) {
+            return `🔍 <strong>SELECT</strong> هو أمر استعلام البيانات<br>
+                    الصيغة: <code>SELECT columns FROM table WHERE condition;</code><br>
+                    مثال: <code>SELECT * FROM Employee WHERE Salary > 4000;</code><br>
+                    📍 المرجع: lec5 - صفحة 21-31`;
+        }
+        
+        // LIKE
+        if (q.includes('like') || q.includes('نمط') || q.includes('بحث')) {
+            return `🔎 <strong>LIKE</strong> يستخدم للبحث بأنماط معينة<br>
+                    مثال: <code>WHERE Address LIKE '%Houston%'</code><br>
+                    - <strong>%</strong> تعني أي عدد من الأحرف<br>
+                    - <strong>_</strong> تعني حرف واحد<br>
+                    📍 المرجع: lec5 - صفحة 28`;
+        }
+        
+        // INSERT
+        if (q.includes('insert') || q.includes('إدراج')) {
+            return `✏️ <strong>INSERT</strong> لإدراج البيانات<br>
+                    مثال: <code>INSERT INTO Employee VALUES (101, 'Ahmed', ...);</code><br>
+                    📍 المرجع: lec5 - صفحة 18`;
+        }
+        
+        // UPDATE / DELETE
+        if (q.includes('update') || q.includes('تعديل')) {
+            return `✏️ <strong>UPDATE</strong> لتعديل البيانات<br>
+                    مثال: <code>UPDATE Employee SET Salary = 6000 WHERE SSN = 101;</code><br>
+                    📍 المرجع: lec5 - صفحة 20`;
+        }
+        if (q.includes('delete') || q.includes('حذف')) {
+            return `🗑️ <strong>DELETE</strong> لحذف البيانات<br>
+                    مثال: <code>DELETE FROM Employee WHERE SSN = 105;</code><br>
+                    📍 المرجع: lec5 - صفحة 19`;
+        }
+        
+        // BETWEEN
+        if (q.includes('between') || q.includes('بين')) {
+            return `📊 <strong>BETWEEN</strong> لتحديد نطاق بين قيمتين<br>
+                    مثال: <code>WHERE Salary BETWEEN 3000 AND 5000</code><br>
+                    📍 المرجع: lec5 - صفحة 29`;
+        }
+        
+        // ORDER BY
+        if (q.includes('order') || q.includes('ترتيب')) {
+            return `🔄 <strong>ORDER BY</strong> لترتيب النتائج<br>
+                    مثال: <code>ORDER BY Salary DESC</code> (تنازلي)<br>
+                    مثال: <code>ORDER BY Name ASC</code> (تصاعدي)<br>
+                    📍 المرجع: lec5 - صفحة 30-31`;
+        }
+        
+        // JOIN
+        if (q.includes('join') || q.includes('ضم') || q.includes('جدولين')) {
+            return `🔗 <strong>JOIN</strong> لضم جدولين أو أكثر<br>
+                    مثال: <code>SELECT Employee.Fname, Department.Dname<br>
+                    FROM Employee, Department<br>
+                    WHERE Employee.Dno = Department.Dnumber;</code><br>
+                    📍 المرجع: lec5 - صفحة 22`;
+        }
+        
+        // Primary Key / Foreign Key
+        if (q.includes('primary') || q.includes('مفتاح أساسي')) {
+            return `🔑 <strong>PRIMARY KEY</strong> (المفتاح الأساسي):<br>
+                    - يحدد كل سجل بشكل فريد<br>
+                    - لا يمكن أن يكون NULL<br>
+                    - لا يمكن تكرار قيمته<br>
+                    📍 المرجع: lec5 - صفحة 16`;
+        }
+        if (q.includes('foreign') || q.includes('مفتاح أجنبي')) {
+            return `🔗 <strong>FOREIGN KEY</strong> (المفتاح الأجنبي):<br>
+                    - يربط جدول بجدول آخر<br>
+                    - يشير إلى PRIMARY KEY في الجدول الآخر<br>
+                    مثال: <code>FOREIGN KEY (Dno) REFERENCES Department(Dnumber)</code><br>
+                    📍 المرجع: lec5 - صفحة 8-11`;
+        }
+        
+        // ترحيب عام
+        if (q.includes('مرحب') || q.includes('السلام') || q.includes('hi') || q.includes('hello')) {
+            return `👋 مرحباً بك! أنا الذكاء الاصطناعي الخاص بـ <strong>Youssef Sobhy</strong>.<br>
+                    اسألني أي شيء عن:<br>
+                    • SQL وأوامرها (SELECT, INSERT, UPDATE, DELETE)<br>
+                    • أنواع البيانات والقيود<br>
+                    • المطور ومعلومات التواصل<br>
+                    اتفضل اسأل وأنا أجيبك!`;
+        }
+        
+        // افتراضي
+        return `🤖 أنا الذكاء الاصطناعي الخاص بـ <strong>Youssef Sobhy</strong>.<br>
+                يمكنني مساعدتك في أسئلة SQL مثل:<br>
+                • SELECT / INSERT / UPDATE / DELETE<br>
+                • LIKE / BETWEEN / ORDER BY<br>
+                • PRIMARY KEY / FOREIGN KEY<br>
+                • JOIN بين الجداول<br>
+                أو اسأل عن <strong>معلومات المطور</strong>.<br>
+                ماذا تريد أن تعرف؟`;
+    }
+
+    function sendMessage() {
+        const userMessage = chatInput.value.trim();
+        if (!userMessage) return;
+        
+        addMessage(userMessage, true);
+        chatInput.value = '';
+        
+        setTimeout(() => {
+            const response = getAIResponse(userMessage);
+            addMessage(response, false);
+        }, 300);
+    }
+
+    sendBtn.onclick = sendMessage;
+    chatInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+    });
+
+    document.getElementById('homeBtn').addEventListener('click', openSidebar);
+    document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeSidebar(); });
+</script>
+</body>
+</html>
